@@ -19,7 +19,7 @@
 
   <!-- ================= GITHUB PAGES + GOOGLE SHEETS API CONFIG ================= -->
   <script>
-    // 구글 앱스 스크립트 웹 앱 URL 적용 완료
+    // 선생님의 구글 웹 앱 URL이 연결되어 있습니다.
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZ8HKEJqqnGuEReU1KRU2aQGWouaCMN7PzHHDiJwznbsZEl8hOy7lMcQ-EtxvcUZTC/exec";
   </script>
 
@@ -415,18 +415,35 @@
       }
     }
 
-    // 교사 대시보드: 스프레드시트 데이터 불러오기
+    // 교사 대시보드: 스프레드시트 데이터 불러오기 (캐시 방지 타임스탬프 탑재)
     async function fetchSheetSubmissions() {
       const tbody = document.getElementById("submission-list");
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>구글 스프레드시트 데이터를 동기화하는 중...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>구글 스프레드시트 최신 데이터를 동기화하는 중...</td></tr>`;
 
       try {
-        const res = await fetch(GOOGLE_SCRIPT_URL);
-        cachedSubmissions = await res.json();
-        renderSubmissionTable(cachedSubmissions);
+        // 브라우저 캐시 방지를 위해 현재 시간 타임스탬프를 쿼리에 추가
+        const cacheBusterUrl = GOOGLE_SCRIPT_URL + (GOOGLE_SCRIPT_URL.includes("?") ? "&" : "?") + "t=" + new Date().getTime();
+
+        const res = await fetch(cacheBusterUrl, {
+          method: "GET",
+          headers: { "Accept": "application/json" }
+        });
+
+        if (!res.ok) {
+          throw new Error("HTTP 상태 코드: " + res.status);
+        }
+
+        const data = await res.json();
+        
+        if (Array.isArray(data)) {
+          cachedSubmissions = data;
+          renderSubmissionTable(cachedSubmissions);
+        } else {
+          throw new Error("데이터 배열이 아닙니다.");
+        }
       } catch (e) {
         console.warn("스프레드시트 데이터 조회 오류:", e);
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-rose-500 font-semibold">데이터를 불러오지 못했습니다. 스프레드시트 Apps Script 배포 설정(액세스 권한: 모든 사용자)을 확인하세요.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-rose-500 font-semibold">데이터를 불러오는 중 지연이 발생했습니다. 상단의 [새로고침] 버튼을 한 번 더 눌러주세요.</td></tr>`;
       }
     }
 
