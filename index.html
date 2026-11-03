@@ -18,7 +18,7 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1LRg9YpKF3O4yh7qolWp5WebepEBUy-NwJQ_m73biQcWQ2mmKLj32TjmE55HDoDto/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyleWNhN4p3hCSs20iFr9t-yf8qGS3c2maoUAbuZYqm9HE8JJQToZwOKzE99YrjgEww/exec";
   </script>
 
   <!-- 상단 네비게이션 바 -->
@@ -66,13 +66,13 @@
       </form>
     </div>
 
-    <!-- 2. 학생 보고서 작성 화면 -->
+    <!-- 2. 학생 보고서 작성 화면 (수정된 7개 항목) -->
     <div id="student-section" class="hidden space-y-6">
       <div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 p-5 rounded-xl shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4 no-print">
         <div>
           <span class="inline-block px-2.5 py-0.5 bg-indigo-600 text-white text-[11px] font-bold rounded-full mb-1">과학·발명 탐구 과제</span>
           <h2 class="text-xl font-extrabold text-slate-800">각종 센서를 활용한 생활 발명품 제작하기</h2>
-          <p class="text-xs text-slate-600 mt-0.5">문항을 성실하게 작성한 뒤 최종 제출을 진행하세요.</p>
+          <p class="text-xs text-slate-600 mt-0.5">각 항목의 안내를 읽고 성실하게 작성한 뒤 최종 제출을 진행하세요.</p>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="previewReport()" class="px-3.5 py-2 bg-white text-indigo-700 border border-indigo-300 hover:bg-indigo-50 rounded-lg text-xs font-bold shadow-sm">
@@ -82,51 +82,67 @@
       </div>
 
       <form id="report-form" onsubmit="handleSubmitReport(event)" class="space-y-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-          <label class="block text-sm font-bold text-slate-800 mb-1.5">발명품 작품명 <span class="text-red-500">*</span></label>
-          <input type="text" id="report-title" required placeholder="예: 시각장애인을 위한 초음파 스마트 지팡이" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
-        </div>
-
-        <!-- 1번 항목 -->
+        <!-- 1. 작품명 -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">1</span>
-            <label class="text-sm font-bold text-slate-800">사용한 센서는 무엇인지 작성하시오. <span class="text-red-500">*</span></label>
+            <label class="text-sm font-bold text-slate-800">작품명 <span class="text-red-500">*</span></label>
           </div>
-          <div class="flex flex-wrap gap-1.5 pt-1">
-            <button type="button" onclick="appendTag('초음파 센서')" class="text-xs bg-slate-100 hover:bg-indigo-100 text-slate-700 px-2 py-1 rounded border">+ 초음파 센서</button>
-            <button type="button" onclick="appendTag('온습도 센서 (DHT11)')" class="text-xs bg-slate-100 hover:bg-indigo-100 text-slate-700 px-2 py-1 rounded border">+ 온습도 센서</button>
-            <button type="button" onclick="appendTag('인체감지(PIR) 센서')" class="text-xs bg-slate-100 hover:bg-indigo-100 text-slate-700 px-2 py-1 rounded border">+ PIR 모션 센서</button>
-            <button type="button" onclick="appendTag('조도 센서 (CDS)')" class="text-xs bg-slate-100 hover:bg-indigo-100 text-slate-700 px-2 py-1 rounded border">+ 조도 센서</button>
-          </div>
-          <textarea id="report-sensor" rows="3" required placeholder="발명품에 적용한 센서 이름과 해당 센서를 선정한 이유를 서술하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+          <input type="text" id="report-title" required placeholder="예: 시각장애인을 위한 초음파 스마트 안전 지팡이" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
         </div>
 
-        <!-- 2번 항목 -->
+        <!-- 2. 작품 특징 -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">2</span>
-            <label class="text-sm font-bold text-slate-800">실험에 필요한 실험 기구를 작성하시오. <span class="text-red-500">*</span></label>
+            <label class="text-sm font-bold text-slate-800">작품 특징 <span class="text-red-500">*</span></label>
           </div>
-          <textarea id="report-tools" rows="3" required placeholder="예: 아두이노 우노 보드, 브레드보드, 점퍼선 10개, 피에조 부저, 9V 배터리, 글루건 등" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+          <textarea id="report-features" rows="3" required placeholder="작품의 핵심 기능과 기존 물건과의 차별화된 특징을 간결하게 서술하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
         </div>
 
-        <!-- 3번 항목 -->
+        <!-- 3. 고안 계기 및 센서 선정 이유 -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">3</span>
-            <label class="text-sm font-bold text-slate-800">실험에 대한 고안 (아이디어 배경 및 과학적 원리) <span class="text-red-500">*</span></label>
+            <label class="text-sm font-bold text-slate-800">생활 발명품을 고안하게 된 계기와 해당 아두이노 센서를 고른 이유 <span class="text-red-500">*</span></label>
           </div>
-          <textarea id="report-hypothesis" rows="4" required placeholder="생활 속 어떤 문제를 해결하기 위해 고안했는지, 센서의 작동 원리는 어떻게 활용되는지 구체적으로 작성하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+          <textarea id="report-motive" rows="4" required placeholder="생활 속 어떤 불편함을 해결하고자 했는지, 그리고 왜 이 특정 센서(초음파, 적외선, 온습도 등)를 선택했는지 구체적으로 작성하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
         </div>
 
-        <!-- 4번 항목 -->
+        <!-- 4. 준비물 -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
           <div class="flex items-center gap-2">
             <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">4</span>
-            <label class="text-sm font-bold text-slate-800">실험 방법을 작성하시오. <span class="text-red-500">*</span></label>
+            <label class="text-sm font-bold text-slate-800">준비물 <span class="text-red-500">*</span></label>
           </div>
-          <textarea id="report-methods" rows="5" required placeholder="1. 회로 연결 방법&#10;2. 센서 측정값 테스트 순서&#10;3. 발명품 외형 조립 및 실제 동작 검증 과정을 순서대로 작성하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+          <textarea id="report-materials" rows="3" required placeholder="예: 아두이노 우노 보드, 초음파 센서(HC-SR04), 피에조 부저, 브레드보드, 점퍼선 8개, 9V 배터리, 지팡이 외형 목재 등" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+        </div>
+
+        <!-- 5. 아두이노 센서 연결 방법 -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">5</span>
+            <label class="text-sm font-bold text-slate-800">아두이노 센서 연결 방법 <span class="text-red-500">*</span></label>
+          </div>
+          <textarea id="report-connection" rows="4" required placeholder="각 센서 핀(VCC, GND, Trig, Echo 등)과 아두이노 보드의 핀 번호 연결 상태를 설명하세요. (예: VCC -> 5V, GND -> GND, Trig -> D9, Echo -> D10)" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 font-mono"></textarea>
+        </div>
+
+        <!-- 6. 발명품 설계 구조 스케치 -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">6</span>
+            <label class="text-sm font-bold text-slate-800">발명품 설계 구조 스케치 <span class="text-red-500">*</span></label>
+          </div>
+          <textarea id="report-sketch" rows="4" required placeholder="발명품의 전체적인 형태, 센서가 부착되는 위치, 부품 배치 및 외형 구조를 설명하거나 스케치 구상을 자세히 묘사하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+        </div>
+
+        <!-- 7. 발명품 활용 시 기대 효과 -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">7</span>
+            <label class="text-sm font-bold text-slate-800">발명품 활용 시 기대 효과 <span class="text-red-500">*</span></label>
+          </div>
+          <textarea id="report-effects" rows="3" required placeholder="이 발명품을 실제로 생활에서 활용했을 때 얻을 수 있는 장점, 문제 해결 효과, 사회적 가치 등을 작성하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
         </div>
 
         <div class="flex justify-end gap-3 pt-2 pb-12 no-print">
@@ -182,8 +198,8 @@
               <tr>
                 <th class="p-3.5">제출일시</th>
                 <th class="p-3.5">학번</th>
-                <th class="p-3.5">발명품 제목</th>
-                <th class="p-3.5">사용한 센서</th>
+                <th class="p-3.5">작품명</th>
+                <th class="p-3.5">작품 특징</th>
                 <th class="p-3.5 text-center">관리</th>
               </tr>
             </thead>
@@ -196,9 +212,9 @@
     </div>
   </main>
 
-  <!-- 보고서 인쇄 및 상세 열람 모달 -->
+  <!-- 보고서 인쇄 및 상세 열람 모달 (새로운 7개 항목 반영) -->
   <div id="preview-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
       <div class="p-4 border-b flex justify-between items-center bg-slate-50 no-print">
         <h3 class="font-bold text-slate-800 text-sm">탐구 보고서 상세 보기</h3>
         <button onclick="closePreviewModal()" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
@@ -212,11 +228,13 @@
           </div>
         </div>
         <div class="space-y-4 text-xs">
-          <div class="bg-slate-50 p-3 rounded border"><b class="text-slate-700">작품명:</b> <span id="view-title" class="font-bold text-indigo-700 text-sm ml-1"></span></div>
-          <div class="p-3 border rounded"><b class="text-indigo-800">[1] 사용한 센서</b><p id="view-sensor" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
-          <div class="p-3 border rounded"><b class="text-indigo-800">[2] 필요한 실험 기구</b><p id="view-tools" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
-          <div class="p-3 border rounded"><b class="text-indigo-800">[3] 실험에 대한 고안</b><p id="view-hypothesis" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
-          <div class="p-3 border rounded"><b class="text-indigo-800">[4] 실험 방법</b><p id="view-methods" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
+          <div class="bg-slate-50 p-3.5 rounded border"><b class="text-slate-700 text-sm">1. 작품명:</b> <span id="view-title" class="font-bold text-indigo-700 text-base ml-1"></span></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">2. 작품 특징</b><p id="view-features" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">3. 생활 발명품을 고안하게 된 계기와 해당 아두이노 센서를 고른 이유</b><p id="view-motive" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">4. 준비물</b><p id="view-materials" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">5. 아두이노 센서 연결 방법</b><p id="view-connection" class="mt-1.5 whitespace-pre-line text-slate-700 font-mono"></p></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">6. 발명품 설계 구조 스케치</b><p id="view-sketch" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">7. 발명품 활용 시 기대 효과</b><p id="view-effects" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
         </div>
       </div>
       <div class="p-4 border-t bg-slate-50 flex justify-end gap-2 no-print">
@@ -228,7 +246,7 @@
     </div>
   </div>
 
-  <!-- 비밀번호 변경 모달 (초기 강제 변경 지원) -->
+  <!-- 비밀번호 변경 모달 -->
   <div id="pw-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-xl max-w-sm w-full p-6 shadow-2xl">
       <div class="text-center mb-4">
@@ -266,12 +284,6 @@
     let currentUser = null;
     let cachedSubmissions = [];
 
-    function appendTag(tagName) {
-      const el = document.getElementById("report-sensor");
-      el.value = el.value ? el.value + ", " + tagName : tagName;
-      el.focus();
-    }
-
     async function handleLogin(e) {
       e.preventDefault();
       const id = document.getElementById("login-id").value.trim();
@@ -283,7 +295,6 @@
         return;
       }
 
-      // 구글 스프레드시트에서 최신 계정 정보 로드 시도
       let accounts = JSON.parse(localStorage.getItem("student_accounts") || "{}");
       try {
         const res = await fetch(GOOGLE_SCRIPT_URL + "?action=getAccounts&t=" + new Date().getTime());
@@ -397,7 +408,6 @@
         return;
       }
 
-      // 로컬 및 스프레드시트에 동기화
       accounts[currentUser.id] = new1;
       localStorage.setItem("student_accounts", JSON.stringify(accounts));
 
@@ -420,7 +430,6 @@
       document.getElementById("pw-modal").classList.add("hidden");
     }
 
-    // [교사 기능 1] 개별 학생 비밀번호 1234로 초기화
     async function handleSingleReset() {
       const studentId = document.getElementById("reset-student-id").value.trim();
       if (!studentId) {
@@ -452,7 +461,6 @@
       }
     }
 
-    // [교사 기능 2] 모든 학생 비밀번호 1234로 전체 초기화
     async function openResetAllModal() {
       const check = prompt("정말 모든 학생의 비밀번호를 1234로 초기화하시겠습니까?\n진행하시려면 '초기화'를 직접 입력하세요.");
       if (check !== "초기화") {
@@ -478,7 +486,6 @@
       }
     }
 
-    // [교사 기능 3] 보고서 개별 삭제
     async function deleteReport(idx) {
       const item = cachedSubmissions[idx];
       if (!item) return;
@@ -508,7 +515,7 @@
       }
     }
 
-    // 보고서 제출: 구글 스프레드시트로 전송
+    // 보고서 제출: 신규 7개 항목 반영
     async function handleSubmitReport(e) {
       e.preventDefault();
       if (!confirm("작성한 보고서를 최종 제출하시겠습니까?")) return;
@@ -521,10 +528,12 @@
         action: "submitReport",
         studentId: currentUser.id,
         title: document.getElementById("report-title").value.trim(),
-        sensor: document.getElementById("report-sensor").value.trim(),
-        tools: document.getElementById("report-tools").value.trim(),
-        hypothesis: document.getElementById("report-hypothesis").value.trim(),
-        methods: document.getElementById("report-methods").value.trim(),
+        features: document.getElementById("report-features").value.trim(),
+        motive: document.getElementById("report-motive").value.trim(),
+        materials: document.getElementById("report-materials").value.trim(),
+        connection: document.getElementById("report-connection").value.trim(),
+        sketch: document.getElementById("report-sketch").value.trim(),
+        effects: document.getElementById("report-effects").value.trim(),
         submittedAt: new Date().toLocaleString("ko-KR")
       };
 
@@ -549,7 +558,6 @@
       }
     }
 
-    // 교사 대시보드 데이터 조회
     async function fetchSheetSubmissions() {
       const tbody = document.getElementById("submission-list");
       tbody.innerHTML = `<tr><td colspan="5" class="text-center p-8 text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>최신 데이터를 불러오는 중...</td></tr>`;
@@ -580,7 +588,7 @@
           <td class="p-3 text-slate-500">${item.submittedAt || "-"}</td>
           <td class="p-3 font-bold text-slate-800">${item.studentId}</td>
           <td class="p-3 text-indigo-700 font-semibold">${item.title}</td>
-          <td class="p-3 text-slate-600 truncate max-w-xs">${item.sensor}</td>
+          <td class="p-3 text-slate-600 truncate max-w-xs">${item.features}</td>
           <td class="p-3 text-center space-x-1 whitespace-nowrap">
             <button onclick="viewDetail(${idx})" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded border border-indigo-200 font-semibold text-xs">
               열람
@@ -601,10 +609,12 @@
       const data = {
         studentId: currentUser.id,
         title: document.getElementById("report-title").value || "(작품명 미입력)",
-        sensor: document.getElementById("report-sensor").value || "(미입력)",
-        tools: document.getElementById("report-tools").value || "(미입력)",
-        hypothesis: document.getElementById("report-hypothesis").value || "(미입력)",
-        methods: document.getElementById("report-methods").value || "(미입력)",
+        features: document.getElementById("report-features").value || "(미입력)",
+        motive: document.getElementById("report-motive").value || "(미입력)",
+        materials: document.getElementById("report-materials").value || "(미입력)",
+        connection: document.getElementById("report-connection").value || "(미입력)",
+        sketch: document.getElementById("report-sketch").value || "(미입력)",
+        effects: document.getElementById("report-effects").value || "(미입력)",
         submittedAt: new Date().toLocaleString("ko-KR") + " (임시 미리보기)"
       };
       showReportModal(data);
@@ -614,10 +624,12 @@
       document.getElementById("view-student-id").innerText = data.studentId;
       document.getElementById("view-date").innerText = data.submittedAt;
       document.getElementById("view-title").innerText = data.title;
-      document.getElementById("view-sensor").innerText = data.sensor;
-      document.getElementById("view-tools").innerText = data.tools;
-      document.getElementById("view-hypothesis").innerText = data.hypothesis;
-      document.getElementById("view-methods").innerText = data.methods;
+      document.getElementById("view-features").innerText = data.features;
+      document.getElementById("view-motive").innerText = data.motive;
+      document.getElementById("view-materials").innerText = data.materials;
+      document.getElementById("view-connection").innerText = data.connection;
+      document.getElementById("view-sketch").innerText = data.sketch;
+      document.getElementById("view-effects").innerText = data.effects;
       document.getElementById("preview-modal").classList.remove("hidden");
     }
 
@@ -630,10 +642,10 @@
         alert("내보낼 데이터가 없습니다.");
         return;
       }
-      let csv = "\uFEFF제출일시,학번,작품명,사용한 센서,필요한 실험기구,실험에 대한 고안,실험 방법\n";
+      let csv = "\uFEFF제출일시,학번,작품명,작품 특징,고안 계기 및 센서 선정 이유,준비물,센서 연결 방법,설계 구조 스케치,기대 효과\n";
       cachedSubmissions.forEach(r => {
         const clean = str => `"${(str || '').replace(/"/g, '""')}"`;
-        csv += `${clean(r.submittedAt)},${clean(r.studentId)},${clean(r.title)},${clean(r.sensor)},${clean(r.tools)},${clean(r.hypothesis)},${clean(r.methods)}\n`;
+        csv += `${clean(r.submittedAt)},${clean(r.studentId)},${clean(r.title)},${clean(r.features)},${clean(r.motive)},${clean(r.materials)},${clean(r.connection)},${clean(r.sketch)},${clean(r.effects)}\n`;
       });
 
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
