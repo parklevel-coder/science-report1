@@ -18,7 +18,7 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4MCSIylJ34bHdFTZ6FyDMXyMVgmtcrgNVXHTDmzuxVY2gNnwFWFbAkj7Ucp56B7tvbw/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxNTFF9FDTNI9edQv-BmCojHqdhlkLbD9ZitqWFqzm0egYIQhE-wFiTC3283yW10sF-1g/exec";
   </script>
 
   <!-- 상단 네비게이션 바 -->
@@ -68,6 +68,8 @@
 
     <!-- 2. 학생 보고서 작성 화면 -->
     <div id="student-section" class="hidden space-y-6">
+
+      <!-- 과제 안내 타이틀 -->
       <div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 p-5 rounded-xl shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4 no-print">
         <div>
           <span class="inline-block px-2.5 py-0.5 bg-indigo-600 text-white text-[11px] font-bold rounded-full mb-1">과학·발명 탐구 과제</span>
@@ -78,6 +80,29 @@
           <button onclick="previewReport()" class="px-3.5 py-2 bg-white text-indigo-700 border border-indigo-300 hover:bg-indigo-50 rounded-lg text-xs font-bold shadow-sm">
             <i class="fa-solid fa-eye mr-1"></i>제출 양식 미리보기
           </button>
+        </div>
+      </div>
+
+      <!-- 기존 발명품 중복 확인 바로가기 링크 배너 (추가됨) -->
+      <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 shadow-sm no-print">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-full bg-amber-200 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
+            <i class="fa-solid fa-lightbulb text-base"></i>
+          </div>
+          <div class="flex-1 text-xs">
+            <h3 class="font-bold text-amber-900 text-sm mb-1">💡 기존에 이미 만들어진 발명품인지 먼저 확인해 보세요!</h3>
+            <p class="text-slate-600 leading-relaxed mb-2.5">
+              독창적이고 실용적인 아이디어를 위해 아래 국립중앙과학관 발명품 검색 데이터베이스에서 유사한 선행 발명품이 있는지 검색해 볼 수 있습니다.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <a href="https://www.science.go.kr/mps/1079/bbs/423/moveBbsNttList.do" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-amber-300 rounded-lg text-amber-900 font-bold hover:bg-amber-100 shadow-sm transition">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> 선행 발명품 검색 DB (1) 바로가기
+              </a>
+              <a href="https://www.science.go.kr/mps/1075/bbs/424/moveBbsNttList.do" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-amber-300 rounded-lg text-amber-900 font-bold hover:bg-amber-100 shadow-sm transition">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> 우수 발명품 검색 DB (2) 바로가기
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -173,6 +198,15 @@
           <textarea id="report-effects" rows="3" required placeholder="이 발명품을 실제로 생활에서 활용했을 때 얻을 수 있는 장점, 문제 해결 효과, 사회적 가치 등을 작성하세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
         </div>
 
+        <!-- 8. AI 활용 정도 및 내용 (추가됨) -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">8</span>
+            <label class="text-sm font-bold text-slate-800">작품에서 AI(인공지능)를 활용한 정도 및 구체적 내용 <span class="text-red-500">*</span></label>
+          </div>
+          <textarea id="report-ai-usage" rows="4" required placeholder="예시:&#10;1. 아이디어 브레인스토밍: 생성형 AI를 활용하여 센서 결합 아이디어 도출 (약 20%)&#10;2. 아두이노 코드 및 회로: AI에게 질문하여 핀 연결 가이드 및 예시 코드 생성 (약 50%)&#10;3. 스케치 생성: AI 이미지 생성 도구를 통해 외형 디자인 구체화 (약 30%)&#10;* AI를 전혀 쓰지 않았거나 일부만 활용한 경우에도 솔직하고 구체적으로 서술해 주세요." class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+        </div>
+
         <div class="flex justify-end gap-3 pt-2 pb-12 no-print">
           <button type="submit" id="btn-submit" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-lg shadow-lg flex items-center gap-2">
             <i class="fa-solid fa-paper-plane"></i> 최종 보고서 제출하기
@@ -240,7 +274,7 @@
     </div>
   </main>
 
-  <!-- 보고서 인쇄 및 상세 열람 모달 (스케치 사진 표시 지원) -->
+  <!-- 보고서 인쇄 및 상세 열람 모달 (AI 활용도 항목 포함) -->
   <div id="preview-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
       <div class="p-4 border-b flex justify-between items-center bg-slate-50 no-print">
@@ -269,6 +303,7 @@
             <p id="view-sketch-text" class="mt-1.5 whitespace-pre-line text-slate-700"></p>
           </div>
           <div class="p-3.5 border rounded"><b class="text-indigo-800">7. 발명품 활용 시 기대 효과</b><p id="view-effects" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
+          <div class="p-3.5 border rounded"><b class="text-indigo-800">8. 작품에서 AI(인공지능)를 활용한 정도 및 내용</b><p id="view-ai-usage" class="mt-1.5 whitespace-pre-line text-slate-700"></p></div>
         </div>
       </div>
       <div class="p-4 border-t bg-slate-50 flex justify-end gap-2 no-print">
@@ -317,9 +352,8 @@
     const TEACHER_PW = "seil319015";
     let currentUser = null;
     let cachedSubmissions = [];
-    let currentBase64Image = ""; // 업로드된 스케치 이미지 데이터
+    let currentBase64Image = "";
 
-    // 이미지 파일 처리 및 최적화 리사이징 (스마트폰 촬영 고화질 자동 압축)
     function handleImageUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -330,7 +364,7 @@
         img.onload = function() {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
-          const maxDim = 1200; // 가로/세로 최대 1200px 리사이즈
+          const maxDim = 1200;
           let width = img.width;
           let height = img.height;
 
@@ -346,7 +380,6 @@
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
 
-          // JPEG 압축 품질 0.75로 최적화
           currentBase64Image = canvas.toDataURL("image/jpeg", 0.75);
           document.getElementById("image-preview").src = currentBase64Image;
           document.getElementById("image-name").innerText = `${file.name} (${Math.round(currentBase64Image.length / 1024)} KB)`;
@@ -596,7 +629,7 @@
       }
     }
 
-    // 보고서 제출: 이미지 파일(Base64) 포함 전송
+    // 보고서 제출: 8번 AI 활용도 항목 포함
     async function handleSubmitReport(e) {
       e.preventDefault();
 
@@ -621,8 +654,9 @@
         materials: document.getElementById("report-materials").value.trim(),
         connection: document.getElementById("report-connection").value.trim(),
         sketch: sketchText,
-        imageFile: currentBase64Image, // 압축된 이미지 Base64 데이터 전송
+        imageFile: currentBase64Image,
         effects: document.getElementById("report-effects").value.trim(),
+        aiUsage: document.getElementById("report-ai-usage").value.trim(), // 8번 AI 활용도
         submittedAt: new Date().toLocaleString("ko-KR")
       };
 
@@ -639,7 +673,6 @@
         
         alert("보고서가 정상적으로 제출되었습니다!\n선생님 확인용 인쇄/PDF 저장 창이 열립니다.");
         
-        // 제출 직후 모달창에 보여줄 데이터 구성
         const displayData = Object.assign({}, payload, {
           sketch: (currentBase64Image ? currentBase64Image + "\n" : "") + sketchText
         });
@@ -709,6 +742,7 @@
         connection: document.getElementById("report-connection").value || "(미입력)",
         sketch: (currentBase64Image ? currentBase64Image + "\n" : "") + (document.getElementById("report-sketch").value || ""),
         effects: document.getElementById("report-effects").value || "(미입력)",
+        aiUsage: document.getElementById("report-ai-usage").value || "(미입력)",
         submittedAt: new Date().toLocaleString("ko-KR") + " (임시 미리보기)"
       };
       showReportModal(data);
@@ -723,8 +757,8 @@
       document.getElementById("view-materials").innerText = data.materials;
       document.getElementById("view-connection").innerText = data.connection;
       document.getElementById("view-effects").innerText = data.effects;
+      document.getElementById("view-ai-usage").innerText = data.aiUsage || "내용 없음";
 
-      // 스케치 영역: 이미지 URL 또는 base64 데이터 추출 및 표시
       const sketchImgContainer = document.getElementById("view-sketch-img-container");
       const sketchImg = document.getElementById("view-sketch-img");
       const sketchText = document.getElementById("view-sketch-text");
@@ -768,10 +802,10 @@
         alert("내보낼 데이터가 없습니다.");
         return;
       }
-      let csv = "\uFEFF제출일시,학번,작품명,작품 특징,고안 계기 및 센서 선정 이유,준비물,센서 연결 방법,설계 구조 스케치 및 사진 링크,기대 효과\n";
+      let csv = "\uFEFF제출일시,학번,작품명,작품 특징,고안 계기 및 센서 선정 이유,준비물,센서 연결 방법,설계 구조 스케치 및 사진 링크,기대 효과,AI 활용 정도 및 내용\n";
       cachedSubmissions.forEach(r => {
         const clean = str => `"${(str || '').replace(/"/g, '""')}"`;
-        csv += `${clean(r.submittedAt)},${clean(r.studentId)},${clean(r.title)},${clean(r.features)},${clean(r.motive)},${clean(r.materials)},${clean(r.connection)},${clean(r.sketch)},${clean(r.effects)}\n`;
+        csv += `${clean(r.submittedAt)},${clean(r.studentId)},${clean(r.title)},${clean(r.features)},${clean(r.motive)},${clean(r.materials)},${clean(r.connection)},${clean(r.sketch)},${clean(r.effects)},${clean(r.aiUsage)}\n`;
       });
 
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
